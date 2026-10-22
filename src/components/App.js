@@ -3,43 +3,21 @@ import "./../styles/App.css";
 
 const App = () => {
   const [numbers, setNumbers] = useState([]);
-  const [number, setNumber] = useState("");
-  const [totalSum, setTotalSum] = useState(0);
+  const [sum, setSum] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const sum = numbers.reduce((total, num) => total + num, 0);
-      setTotalSum(sum);
-    }, 0);
-
-    return () => clearTimeout(timer);
+    setSum(numbers.reduce((a, b) => a + b, 0));
   }, [numbers]);
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setNumber(value);
-
-    if (value !== "" && !isNaN(Number(value))) {
-      setNumbers((prevNumbers) => [...prevNumbers, parseInt(value, 10)]);
-      setNumber("");
-    }
-  };
 
   return (
     <div>
-      <h1>Sum Calculator</h1>
+      <h2>Sum Calculator</h2>
 
-      <input
-        type="number"
-        min="0"
-        value={number}
-        onChange={handleChange}
-        placeholder=""
-      />
+      <button onClick={() => setNumbers([...numbers, 10])}>Add 10</button>
 
-      <p>
-        Sum: <span>{totalSum}</span>
-      </p>
+      <button onClick={() => setNumbers([...numbers, 20])}>Add 20</button>
+
+      <h3>Sum: {sum}</h3>
     </div>
   );
 };
