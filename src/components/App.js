@@ -2,20 +2,23 @@ import React, { useState, useEffect } from "react";
 import "./../styles/App.css";
 
 const App = () => {
-  const [numbers, setNumbers] = useState([]);
   const [input, setInput] = useState("");
+  const [numbers, setNumbers] = useState([]);
   const [sum, setSum] = useState(0);
 
   useEffect(() => {
-    setSum(numbers.reduce((a, b) => a + b, 0));
-  }, [numbers]);
+    const timer = setTimeout(() => {
+      const nums = input
+        .split(",")
+        .map(Number)
+        .filter((n) => !isNaN(n));
 
-  const addNumber = () => {
-    if (input.trim() === "") return;
+      setNumbers(nums);
+      setSum(nums.reduce((a, b) => a + b, 0));
+    }, 0);
 
-    setNumbers([...numbers, Number(input)]);
-    setInput("");
-  };
+    return () => clearTimeout(timer);
+  }, [input]);
 
   return (
     <div>
@@ -25,10 +28,8 @@ const App = () => {
         type="number"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter a number"
+        placeholder=""
       />
-
-      <button onClick={addNumber}>Add Number</button>
 
       <h3>Sum: {sum}</h3>
     </div>
@@ -36,3 +37,4 @@ const App = () => {
 };
 
 export default App;
+2;
