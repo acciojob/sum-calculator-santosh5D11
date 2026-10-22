@@ -3,19 +3,32 @@ import "./../styles/App.css";
 
 const App = () => {
   const [numbers, setNumbers] = useState([]);
+  const [input, setInput] = useState("");
   const [sum, setSum] = useState(0);
 
   useEffect(() => {
     setSum(numbers.reduce((a, b) => a + b, 0));
   }, [numbers]);
 
+  const addNumber = () => {
+    if (input.trim() === "") return;
+
+    setNumbers([...numbers, Number(input)]);
+    setInput("");
+  };
+
   return (
     <div>
       <h2>Sum Calculator</h2>
 
-      <button onClick={() => setNumbers([...numbers, 10])}>Add 10</button>
+      <input
+        type="number"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter a number"
+      />
 
-      <button onClick={() => setNumbers([...numbers, 20])}>Add 20</button>
+      <button onClick={addNumber}>Add Number</button>
 
       <h3>Sum: {sum}</h3>
     </div>
